@@ -39,11 +39,14 @@ def display_choices():
     print("C. Multiplication")
     print("D. Division")
     print("E. Exit")
+    # Dictionay of lists. The first element of the list is the flag.
+    # If True, run the operation (second element). If False, terminate the program
     available_operations = {
-        'A': add,
-        'B': sub,
-        'C': mul,
-        'D': div
+        'A': [True, add],
+        'B': [True, sub],
+        'C': [True, mul],
+        'D': [True, div],
+        'E': [False, None]
     }
     return available_operations 
 
@@ -55,15 +58,16 @@ def main():
         available_operations = display_choices()
         choice = input("Input your choice for operation: ").upper()
 
-        # Terminate the program immediately if user enter keyword 'E' 
-        if choice == 'E':
-            break 
-        # Continue with the next loop if choice is nto a valid options
-        elif choice not in available_operations.keys():
+        # Next loop if choice is not valid 
+        if choice not in available_operations.keys():
             print("Invalid option.\n")
-            continue
+            continue 
         else:
-            operation = available_operations[choice]
+            flag, operation = available_operations[choice]
+
+        # If flag is False, exit the loop
+        if flag == False:
+            break 
 
         a = int(input("Enter the first number: "))
         b = int(input("Enter the second number: "))
